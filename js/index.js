@@ -13,7 +13,7 @@ Vue.createApp({
             idToDelete: null,
             deleteMessage: "",
             idToUpdate: null,
-            updateData: { title: "", author: "", publisher: "", price: 0 },
+            updateData: { title: "", price: 0 },
             updateMessage: ""
         }
     },
@@ -32,6 +32,26 @@ Vue.createApp({
             try {
                 const response = await axios.get(url)
                 this.singleBook = await response.data
+            } catch (ex) {
+                alert(ex.message)
+            }
+        },
+        async addBook() {
+            console.log(this.addData)
+            try {
+                response = await axios.post(baseUrl, this.addData)
+                this.addMessage = "response " + response.status + " " + response.statusText
+                this.getAllBooks()
+            } catch (ex) {
+                alert(ex.message)
+            }
+        },
+        async deleteBookById(idToDelete) {
+            const url = baseUrl + "/" + idToDelete
+            try {
+                response = await axios.delete(url)
+                this.deleteMessage = response.status + " " + response.statusText
+                this.getAllBooks()
             } catch (ex) {
                 alert(ex.message)
             }
