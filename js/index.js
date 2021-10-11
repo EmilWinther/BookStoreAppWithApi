@@ -17,16 +17,27 @@ Vue.createApp({
             updateMessage: ""
         }
     },
-    async created() { // life cycle method. Called when browser reloads page
+    async created() {
         try {
             const response = await axios.get(baseUrl)
             this.books = await response.data
             console.log(this.books)
         } catch (ex) {
-            alert(ex.message) // https://www.w3schools.com/js/js_popup.asp
+            alert(ex.message)
         }
     },
     methods: {
+        async helperGetAndShow(url) {
+            try {
+                const response = await axios.get(url)
+                this.cars = await response.data
+            } catch (ex) {
+                alert(ex.message)
+            }
+        },
+        getAllBooks() {
+            this.helperGetAndShow(baseUrl)
+        },
         async getBookById(id) {
             const url = baseUrl + "/" + id
             try {
@@ -51,6 +62,17 @@ Vue.createApp({
             try {
                 response = await axios.delete(url)
                 this.deleteMessage = response.status + " " + response.statusText
+                this.getAllBooks()
+            } catch (ex) {
+                alert(ex.message)
+            }
+        },
+        async updateBook() {
+            console.log(this.updateData)
+            const url = baseUrl + "/" + this.idToUpdate
+            try {
+                response = await axios.put(url, this.updateData)
+                this.updateMessage = "response " + response.status + " " + response.statusText
                 this.getAllBooks()
             } catch (ex) {
                 alert(ex.message)

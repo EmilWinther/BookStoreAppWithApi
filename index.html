@@ -58,6 +58,13 @@
         <button v-on:click="deleteBookById(idToDelete)" class="btn btn-warning">Delete Book</button>
         <div>{{deleteMessage}}</div>
 
+        <h2>Update book</h2>
+        <input v-model.number="idToUpdate" placeholder="id" type="number" />
+        <input v-model="updateData.title" placeholder="title" type="text" />
+        <input v-model.number="updateData.price" placeholder="price" type="number" />
+        <button v-on:click="updateBook(idToUpdate)" class="btn btn-success">Update</button>
+        <div>{{updateMessage}}</div>
+
     </div>
     <script src="js/index.js"></script>
 </body>
